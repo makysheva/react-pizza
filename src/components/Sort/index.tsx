@@ -6,8 +6,9 @@ export const Sort = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [activeNameIdx, setActiveNameIdx] = useState(0)
 
-  const handleOpenPopup = () => {
-    setIsOpen(!isOpen)
+  const handleClickItem = (i: number) => {
+    setActiveNameIdx(i)
+    setIsOpen(false)
   }
 
   return (
@@ -26,7 +27,7 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={handleOpenPopup}>популярности</span>
+        <span onClick={() => setIsOpen(!isOpen)}>{list[activeNameIdx]}</span>
       </div>
       {
         isOpen ?
@@ -36,7 +37,7 @@ export const Sort = () => {
                 list.map((item, i) =>
                   <li
                     key={i}
-                    onClick={() => setActiveNameIdx(i)}
+                    onClick={() => handleClickItem(i)}
                     className={activeNameIdx === i ? 'active' : ''}
                   >
                     {item}
