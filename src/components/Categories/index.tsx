@@ -1,4 +1,7 @@
+import classNames from 'classnames'
 import React, { useState } from 'react'
+
+import './Categories.scss'
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
@@ -7,13 +10,13 @@ export const Categories = () => {
 
   return (
     <div className="categories">
-      <ul>
+      <ul className="list">
         {
           categories.map((category, i) => (
             <li
               key={i}
               onClick={() => setActiveIdx(i)}
-              className={activeIdx === i ? 'active' : ''}
+              className={activeIdx === i ? "active" : ""}
             >
               {category}
             </li>

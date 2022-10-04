@@ -14,7 +14,7 @@
 
   &,
   span {
-    color: #fff;
+    color: $white;
   }
 
   i,
@@ -54,8 +54,9 @@
   }
 
   &--outline {
-    background-color: #fff;
+    background-color: $white;
     border-color: $orange;
+
     &,
     span {
       color: $orange;
@@ -72,12 +73,12 @@
 
       &,
       span {
-        color: #fff;
+        color: $white;
       }
 
       svg {
         path {
-          fill: #fff;
+          fill: $white;
         }
       }
     }
@@ -90,7 +91,7 @@
   &__delimiter {
     width: 1px;
     height: 25px;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: $gray-600;
     margin-left: 14px;
     margin-right: 14px;
   }
@@ -107,7 +108,7 @@
 
     &:hover {
       i {
-        background-color: #fff;
+        background-color: $white;
         color: $orange;
       }
     }
@@ -116,7 +117,7 @@
       display: inline-block;
       border-radius: 30px;
       background-color: $orange;
-      color: #fff;
+      color: $white;
       font-weight: 600;
       width: 22px;
       height: 22px;

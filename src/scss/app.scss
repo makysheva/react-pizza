@@ -11,7 +11,7 @@ body {
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;
-  background-color: #fff;
+  background-color: $white;
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
@@ -34,6 +34,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media(max-width: 1200px) {
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 40px;
+    }
   }
 }
 
@@ -41,11 +47,17 @@ body {
   text-align: center;
   margin: 90px auto;
 
-  &_description {
-    font-size: 22px;
+  &__title {
+    @media(max-width: 992px) {
+      font-size: 22px;
+    }
+  }
+
+  &__description {
     max-width: 550px;
     width: 100%;
     margin: 0 auto;
+    font-size: 22px;
   }
 }
 
@@ -98,7 +110,7 @@ body {
     span {
       display: inline-block;
       margin-left: 7px;
-      color: #b6b6b6;
+      color: $gray;
       font-size: 18px;
     }
 
@@ -111,12 +123,12 @@ body {
     &:hover {
       svg {
         path {
-          stroke: darken($color: #b6b6b6, $amount: 50);
+          stroke: darken($color: $gray, $amount: 50);
         }
       }
 
       span {
-        color: darken($color: #b6b6b6, $amount: 50);
+        color: darken($color: $gray, $amount: 50);
       }
     }
   }
@@ -155,7 +167,7 @@ body {
 
       p {
         font-size: 18px;
-        color: #8d8d8d;
+        color: $gray-300;
       }
     }
 
@@ -292,19 +304,21 @@ body {
 
   &--empty {
     margin: 0 auto;
-    width: 560px;
+    max-width: 560px;
+    width: 100%;
     text-align: center;
 
     h2 {
       font-size: 32px;
       margin-bottom: 10px;
+      line-height: 42px;
     }
 
     p {
       font-size: 18px;
       line-height: 145.4%;
       letter-spacing: 0.01em;
-      color: #777777;
+      color: $gray-400;
     }
 
     icon {
@@ -314,13 +328,15 @@ body {
 
     img {
       display: block;
-      width: 300px;
+      max-width: 300px;
+      width: 100%;
       margin: 45px auto 60px;
     }
 
     .button--black {
       padding: 12px 0 14px;
-      width: 230px;
+      max-width: 230px;
+      width: 100%;
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
