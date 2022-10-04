@@ -37,6 +37,18 @@ body {
   }
 }
 
+.NotFoundBlock {
+  text-align: center;
+  margin: 90px auto;
+
+  &_description {
+    font-size: 22px;
+    max-width: 550px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
 .container {
   width: $container-width;
   margin: 0 auto;
