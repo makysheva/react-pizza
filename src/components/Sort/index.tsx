@@ -1,19 +1,27 @@
-import React, { useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
+import classNames from 'classnames'
 
 const list = ['популярности', 'цене', 'алфавиту']
 
-export const Sort = () => {
+type SortProps = {
+  onClickSort: (args: number) => void
+  sortIdx: number
+}
+
+export const Sort: FC<SortProps> = ({
+  onClickSort,
+  sortIdx,
+}) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [activeNameIdx, setActiveNameIdx] = useState(0)
 
   const handleClickItem = (i: number) => {
-    setActiveNameIdx(i)
+    onClickSort(i)
     setIsOpen(false)
   }
 
   return (
     <div className="sort">
-      <div className="sort__label">
+      <div className={classNames("sort__label", { "sort__open": isOpen })}>
         <svg
           width="10"
           height="6"
@@ -27,7 +35,7 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsOpen(!isOpen)}>{list[activeNameIdx]}</span>
+        <span onClick={() => setIsOpen(!isOpen)}>{list[sortIdx]}</span>
       </div>
       {
         isOpen ?
@@ -38,7 +46,7 @@ export const Sort = () => {
                   <li
                     key={i}
                     onClick={() => handleClickItem(i)}
-                    className={activeNameIdx === i ? 'active' : ''}
+                    className={sortIdx === i ? 'active' : ''}
                   >
                     {item}
                   </li>
