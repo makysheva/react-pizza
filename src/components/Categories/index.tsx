@@ -1,13 +1,19 @@
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import './Categories.scss'
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
-export const Categories = () => {
-  const [activeIdx, setActiveIdx] = useState(0)
+type CategoriesProps = {
+  onClickCategory: (args: number) => void
+  categoryIdx: number
+}
 
+export const Categories: FC<CategoriesProps> = ({
+  onClickCategory,
+  categoryIdx
+}) => {
   return (
     <div className="categories">
       <ul className="list">
@@ -15,8 +21,8 @@ export const Categories = () => {
           categories.map((category, i) => (
             <li
               key={i}
-              onClick={() => setActiveIdx(i)}
-              className={activeIdx === i ? "active" : ""}
+              onClick={() => onClickCategory(i)}
+              className={categoryIdx === i ? "active" : ""}
             >
               {category}
             </li>
