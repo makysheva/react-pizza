@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 
@@ -8,10 +9,11 @@ import { Home } from './pages/Home';
 import './scss/app.scss';
 
 export const App = () => {
+  const [searchValue, setSearchValue] = useState('')
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
-        <Route index element={<Home />} />
+      <Route path='/' element={<Layout searchValue={searchValue} setSearchValue={setSearchValue} />}>
+        <Route index element={<Home searchValue={searchValue} setSearchValue={setSearchValue} />} />
         <Route path="cart" element={<Cart />} />
         <Route path="*" element={<NotFound />} />
       </Route>

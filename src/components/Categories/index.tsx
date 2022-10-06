@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React, { FC, useState } from 'react'
 
 import './Categories.scss'

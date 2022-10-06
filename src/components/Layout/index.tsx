@@ -1,11 +1,20 @@
+import { Dispatch, FC, SetStateAction } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { Header } from '../Header'
 
-export const Layout = () => {
+type LayoutProps = {
+    searchValue: string
+    setSearchValue: Dispatch<SetStateAction<string>>
+}
+
+export const Layout: FC<LayoutProps> = ({
+    searchValue,
+    setSearchValue
+}) => {
     return (
         <div className="wrapper">
-            <Header />
+            <Header searchValue={searchValue} setSearchValue={setSearchValue} />
             <div className="content">
                 <Outlet />
             </div>

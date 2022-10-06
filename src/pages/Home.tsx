@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { Categories } from '../components/Categories'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/Skeleton'
@@ -15,7 +15,15 @@ type DataType = {
     rating: number;
 }
 
-export const Home = () => {
+type HomeProps = {
+    searchValue: string
+    setSearchValue: Dispatch<SetStateAction<string>>
+}
+
+export const Home: FC<HomeProps> = ({
+    searchValue,
+    setSearchValue
+}) => {
     const [data, setData] = useState<DataType[]>([])
     const [categoryIdx, setCategoryIdx] = useState(0)
     const [sortIdx, setSortIdx] = useState(0)
@@ -41,14 +49,15 @@ export const Home = () => {
         const category = categoryIdx > 0 ? `category=${categoryIdx}` : ''
         const sortBy = sortType[sortIdx].property
         const orderBy = sortType[sortIdx].name.includes('DESC') ? 'desc' : 'asc';
+        const search = searchValue ? `${searchValue}` : ''
 
-        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?${category}&sortBy=${sortBy}&order=${orderBy}`)
+        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?${category}&sortBy=${sortBy}&order=${orderBy}&search=${search}`)
             .then(res => res.json())
             .then((arr) => {
                 setIsLoading(false)
                 setData(arr)
             })
-    }, [categoryIdx, sortIdx])
+    }, [categoryIdx, sortIdx, searchValue])
 
     return (
         <div className="container">
