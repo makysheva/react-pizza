@@ -1,8 +1,24 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { Categories } from '../components/Categories'
+import { Pagination } from '../components/Pagination'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/Skeleton'
 import { Sort } from '../components/Sort'
+
+const sortType = [
+    {
+        name: 'популярности',
+        property: 'rating',
+    },
+    {
+        name: 'цене',
+        property: 'price',
+    },
+    {
+        name: 'алфавиту',
+        property: 'alpha',
+    }
+]
 
 type DataType = {
     id: number;
@@ -17,31 +33,16 @@ type DataType = {
 
 type HomeProps = {
     searchValue: string
-    setSearchValue: Dispatch<SetStateAction<string>>
 }
 
 export const Home: FC<HomeProps> = ({
     searchValue,
-    setSearchValue
 }) => {
     const [data, setData] = useState<DataType[]>([])
     const [categoryIdx, setCategoryIdx] = useState(0)
     const [sortIdx, setSortIdx] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
-    const [sortType, setSortType] = useState([
-        {
-            name: 'популярности',
-            property: 'rating',
-        },
-        {
-            name: 'цене',
-            property: 'price',
-        },
-        {
-            name: 'алфавиту',
-            property: 'alpha',
-        }
-    ])
+    const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
         setIsLoading(true)
@@ -51,13 +52,13 @@ export const Home: FC<HomeProps> = ({
         const orderBy = sortType[sortIdx].name.includes('DESC') ? 'desc' : 'asc';
         const search = searchValue ? `${searchValue}` : ''
 
-        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?${category}&sortBy=${sortBy}&order=${orderBy}&search=${search}`)
+        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${orderBy}&search=${search}`)
             .then(res => res.json())
             .then((arr) => {
                 setIsLoading(false)
                 setData(arr)
             })
-    }, [categoryIdx, sortIdx, searchValue])
+    }, [categoryIdx, sortIdx, searchValue, currentPage])
 
     return (
         <div className="container">
@@ -75,6 +76,7 @@ export const Home: FC<HomeProps> = ({
                 }
 
             </div>
+            <Pagination setCurrentPage={setCurrentPage} />
         </div>
     )
 }

@@ -13,7 +13,7 @@ export const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Layout searchValue={searchValue} setSearchValue={setSearchValue} />}>
-        <Route index element={<Home searchValue={searchValue} setSearchValue={setSearchValue} />} />
+        <Route index element={<Home searchValue={searchValue} />} />
         <Route path="cart" element={<Cart />} />
         <Route path="*" element={<NotFound />} />
       </Route>
