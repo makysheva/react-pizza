@@ -1,15 +1,10 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import { useContext } from 'react'
+import { SearchContext } from '../../App'
 import './Search.scss'
 
-type SearchProps = {
-    searchValue: string
-    setSearchValue: Dispatch<SetStateAction<string>>
-}
+export const Search = () => {
+    const { searchValue, setSearchValue } = useContext(SearchContext)
 
-export const Search: FC<SearchProps> = ({
-    searchValue,
-    setSearchValue
-}) => {
     return (
         <div className="root">
             <svg

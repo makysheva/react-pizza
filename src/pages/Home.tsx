@@ -1,4 +1,5 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useContext, useEffect, useState } from 'react'
+import { SearchContext } from '../App'
 import { Categories } from '../components/Categories'
 import { Pagination } from '../components/Pagination'
 import { PizzaBlock } from '../components/PizzaBlock'
@@ -31,18 +32,13 @@ type DataType = {
     rating: number;
 }
 
-type HomeProps = {
-    searchValue: string
-}
-
-export const Home: FC<HomeProps> = ({
-    searchValue,
-}) => {
+export const Home = () => {
     const [data, setData] = useState<DataType[]>([])
     const [categoryIdx, setCategoryIdx] = useState(0)
     const [sortIdx, setSortIdx] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
+    const { searchValue } = useContext(SearchContext)
 
     useEffect(() => {
         setIsLoading(true)
@@ -52,7 +48,7 @@ export const Home: FC<HomeProps> = ({
         const orderBy = sortType[sortIdx].name.includes('DESC') ? 'desc' : 'asc';
         const search = searchValue ? `${searchValue}` : ''
 
-        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${orderBy}&search=${search}`)
+        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${orderBy}&search=${search}&title=${searchValue}`)
             .then(res => res.json())
             .then((arr) => {
                 setIsLoading(false)

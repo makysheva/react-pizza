@@ -3,18 +3,10 @@ import { Outlet } from 'react-router-dom'
 
 import { Header } from '../Header'
 
-type LayoutProps = {
-    searchValue: string
-    setSearchValue: Dispatch<SetStateAction<string>>
-}
-
-export const Layout: FC<LayoutProps> = ({
-    searchValue,
-    setSearchValue
-}) => {
+export const Layout = () => {
     return (
         <div className="wrapper">
-            <Header searchValue={searchValue} setSearchValue={setSearchValue} />
+            <Header />
             <div className="content">
                 <Outlet />
             </div>
