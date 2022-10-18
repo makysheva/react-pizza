@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 
 import './Categories.scss'
 
@@ -6,12 +6,12 @@ const categories = ['Все', 'Мясные', 'Вегетарианская', '�
 
 type CategoriesProps = {
   onClickCategory: (args: number) => void
-  categoryIdx: number
+  categoryId: unknown
 }
 
 export const Categories: FC<CategoriesProps> = ({
   onClickCategory,
-  categoryIdx
+  categoryId
 }) => {
   return (
     <div className="categories">
@@ -21,7 +21,7 @@ export const Categories: FC<CategoriesProps> = ({
             <li
               key={i}
               onClick={() => onClickCategory(i)}
-              className={categoryIdx === i ? "active" : ""}
+              className={categoryId === i ? "active" : ""}
             >
               {category}
             </li>

@@ -1,10 +1,13 @@
-import { Dispatch, FC, SetStateAction, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { SearchContext } from '../App'
 import { Categories } from '../components/Categories'
 import { Pagination } from '../components/Pagination'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/Skeleton'
 import { Sort } from '../components/Sort'
+import { setCategoryId } from '../redux/slices/filterSlice'
+import { RootState } from '../redux/store'
 
 const sortType = [
     {
@@ -34,16 +37,17 @@ type DataType = {
 
 export const Home = () => {
     const [data, setData] = useState<DataType[]>([])
-    const [categoryIdx, setCategoryIdx] = useState(0)
     const [sortIdx, setSortIdx] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
     const { searchValue } = useContext(SearchContext)
+    const categoryId = useSelector<RootState>(state => state.filter.categoryId)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setIsLoading(true)
 
-        const category = categoryIdx > 0 ? `category=${categoryIdx}` : ''
+        const category = categoryId!! > 0 ? `category=${categoryId}` : ''
         const sortBy = sortType[sortIdx].property
         const orderBy = sortType[sortIdx].name.includes('DESC') ? 'desc' : 'asc';
         const search = searchValue ? `${searchValue}` : ''
@@ -54,12 +58,12 @@ export const Home = () => {
                 setIsLoading(false)
                 setData(arr)
             })
-    }, [categoryIdx, sortIdx, searchValue, currentPage])
+    }, [categoryId, sortIdx, searchValue, currentPage])
 
     return (
         <div className="container">
             <div className="content__top">
-                <Categories categoryIdx={categoryIdx} onClickCategory={(i) => setCategoryIdx(i)} />
+                <Categories categoryId={categoryId} onClickCategory={(i) => dispatch(setCategoryId(i))} />
                 <Sort sortIdx={sortIdx} onClickSort={(i) => setSortIdx(i)} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
