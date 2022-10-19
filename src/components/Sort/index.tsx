@@ -1,20 +1,28 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import classNames from 'classnames'
+import { useDispatch } from 'react-redux'
+import { setSort } from '../../redux/slices/filterSlice'
+
+import './Sort.scss'
 
 const list = ['популярности', 'цене', 'алфавиту']
 
 type SortProps = {
   onClickSort: (args: number) => void
   sortIdx: number
+  setOrderType: Dispatch<SetStateAction<string>>
 }
 
 export const Sort: FC<SortProps> = ({
   onClickSort,
   sortIdx,
+  setOrderType,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const dispatch = useDispatch()
 
   const handleClickItem = (i: number) => {
+    dispatch(setSort(i))
     onClickSort(i)
     setIsOpen(false)
   }
@@ -34,6 +42,10 @@ export const Sort: FC<SortProps> = ({
             fill="#2C2C2C"
           />
         </svg>
+        <div className="root">
+          <button onClick={() => setOrderType('asc')}> ↑ </button>
+          <button onClick={() => setOrderType('desc')}> ↓ </button>
+        </div>
         <b>Сортировка по:</b>
         <span onClick={() => setIsOpen(!isOpen)}>{list[sortIdx]}</span>
       </div>

@@ -9,21 +9,6 @@ import { Sort } from '../components/Sort'
 import { setCategoryId } from '../redux/slices/filterSlice'
 import { RootState } from '../redux/store'
 
-const sortType = [
-    {
-        name: 'популярности',
-        property: 'rating',
-    },
-    {
-        name: 'цене',
-        property: 'price',
-    },
-    {
-        name: 'алфавиту',
-        property: 'alpha',
-    }
-]
-
 type DataType = {
     id: number;
     imageUrl: string;
@@ -40,31 +25,32 @@ export const Home = () => {
     const [sortIdx, setSortIdx] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
+    const [orderType, setOrderType] = useState("asc")
+    
     const { searchValue } = useContext(SearchContext)
-    const categoryId = useSelector<RootState>(state => state.filter.categoryId)
+    const categoryId = useSelector<RootState>(state => state.filter)
     const dispatch = useDispatch()
+
 
     useEffect(() => {
         setIsLoading(true)
 
-        const category = categoryId!! > 0 ? `category=${categoryId}` : ''
-        const sortBy = sortType[sortIdx].property
-        const orderBy = sortType[sortIdx].name.includes('DESC') ? 'desc' : 'asc';
+        const category = categoryId!! > 0 ? `${categoryId}` : ''
         const search = searchValue ? `${searchValue}` : ''
 
-        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${orderBy}&search=${search}&title=${searchValue}`)
+        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4&order=${orderType}&category=${category}&search=${search}&title=${searchValue}`)
             .then(res => res.json())
             .then((arr) => {
                 setIsLoading(false)
                 setData(arr)
             })
-    }, [categoryId, sortIdx, searchValue, currentPage])
+    }, [categoryId, sortIdx, searchValue, currentPage, orderType])
 
     return (
         <div className="container">
             <div className="content__top">
                 <Categories categoryId={categoryId} onClickCategory={(i) => dispatch(setCategoryId(i))} />
-                <Sort sortIdx={sortIdx} onClickSort={(i) => setSortIdx(i)} />
+                <Sort setOrderType={setOrderType} sortIdx={sortIdx} onClickSort={(i) => setSortIdx(i)} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
