@@ -24,12 +24,12 @@ type DataType = {
 export const Home = () => {
     const [data, setData] = useState<DataType[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const [currentPage, setCurrentPage] = useState(1)
     
     const { searchValue } = useContext(SearchContext)
-    const  { categoryId, sort }: any = useSelector<RootState>(state => ({ 
+    const  { categoryId, sort, currentPage }: any = useSelector<RootState>(state => ({ 
         categoryId: state.filter.categoryId,
-        sort: state.filter.sort.property
+        sort: state.filter.sort.property,
+        currentPage: state.filter.currentPage,
     }))
     const dispatch = useDispatch()
 
@@ -45,7 +45,7 @@ export const Home = () => {
                 setIsLoading(false)
                 setData(res.data)
             })
-    }, [categoryId, searchValue, currentPage, sort])
+    }, [categoryId, currentPage, searchValue, sort])
 
     return (
         <div className="container">
@@ -63,7 +63,7 @@ export const Home = () => {
                 }
 
             </div>
-            <Pagination setCurrentPage={setCurrentPage} />
+            <Pagination currentPage={currentPage} />
         </div>
     )
 }
