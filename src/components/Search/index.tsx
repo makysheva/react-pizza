@@ -1,16 +1,31 @@
-import { useContext, useRef } from 'react'
+import { SetStateAction, useCallback, useContext, useRef, useState } from 'react'
+import debounce from 'lodash.debounce'
 import { SearchContext } from '../../App'
 import './Search.scss'
 
 export const Search = () => {
-    const { searchValue, setSearchValue } = useContext(SearchContext)
+    const { setSearchValue } = useContext(SearchContext)
+    const [value, setValue] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
 
     const handleClickIcon = () => {
         setSearchValue('')
+        setValue('')
         if(inputRef.current){
             inputRef.current.focus()
         }
+    }
+
+    const updateSearchValue = useCallback(
+      debounce((str) => {
+        setSearchValue(str)
+      }, 1000),
+      [],
+    )
+
+    const onChangeSearch = (e: { target: { value: SetStateAction<string> } }) => {
+        setValue(e.target.value)
+        updateSearchValue(e.target.value)
     }
 
     return (
@@ -50,13 +65,13 @@ export const Search = () => {
             </svg>
             <input
                 ref={inputRef}
-                value={searchValue}
+                value={value}
                 className="input"
                 placeholder="Поиск пиццы..."
-                onChange={(e) => setSearchValue(e.target.value)}
+                onChange={onChangeSearch}
             />
             {
-                searchValue ?
+                value ?
                     <svg
                         onClick={handleClickIcon}
                         className="clearIcon"
