@@ -5,7 +5,7 @@ import { Categories } from '../components/Categories'
 import { Pagination } from '../components/Pagination'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/Skeleton'
-import { Sort } from '../components/Sort'
+import { ListType, Sort } from '../components/Sort'
 import { setCategoryId } from '../redux/slices/filterSlice'
 import { RootState } from '../redux/store'
 
@@ -22,10 +22,13 @@ type DataType = {
 
 export const Home = () => {
     const [data, setData] = useState<DataType[]>([])
-    const [sortIdx, setSortIdx] = useState(0)
+    const [sortType, setSortType] = useState<ListType>({
+        name: 'популярности ↓',
+        property: 'rating',
+        order: 'desc'
+    })
     const [isLoading, setIsLoading] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
-    const [orderType, setOrderType] = useState("asc")
     
     const { searchValue } = useContext(SearchContext)
     const categoryId = useSelector<RootState>(state => state.filter)
@@ -35,22 +38,22 @@ export const Home = () => {
     useEffect(() => {
         setIsLoading(true)
 
-        const category = categoryId!! > 0 ? `${categoryId}` : ''
+        const category = categoryId!! > 0 ? `category=${categoryId}` : ''
         const search = searchValue ? `${searchValue}` : ''
 
-        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4&order=${orderType}&category=${category}&search=${search}&title=${searchValue}`)
+        fetch(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4&sortBy=${sortType.property}&order=${sortType.order}&${category}&search=${search}&title=${searchValue}`)
             .then(res => res.json())
             .then((arr) => {
                 setIsLoading(false)
                 setData(arr)
             })
-    }, [categoryId, sortIdx, searchValue, currentPage, orderType])
+    }, [categoryId, sortType, searchValue, currentPage])
 
     return (
         <div className="container">
             <div className="content__top">
-                <Categories categoryId={categoryId} onClickCategory={(i) => dispatch(setCategoryId(i))} />
-                <Sort setOrderType={setOrderType} sortIdx={sortIdx} onClickSort={(i) => setSortIdx(i)} />
+                <Categories onClickCategory={(i) => dispatch(setCategoryId(i))} />
+                <Sort sortType={sortType} onClickSort={(obj: ListType) => setSortType(obj)} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">

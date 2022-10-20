@@ -1,4 +1,6 @@
 import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 import './Categories.scss'
 
@@ -6,13 +8,13 @@ const categories = ['Все', 'Мясные', 'Вегетарианская', '�
 
 type CategoriesProps = {
   onClickCategory: (args: number) => void
-  categoryId: unknown
 }
 
 export const Categories: FC<CategoriesProps> = ({
   onClickCategory,
-  categoryId
 }) => {
+  const categoryId = useSelector<RootState>(state => state.filter.categoryId)
+  
   return (
     <div className="categories">
       <ul className="list">
