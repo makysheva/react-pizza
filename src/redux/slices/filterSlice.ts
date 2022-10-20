@@ -1,29 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-enum SortPropertyEnum {
-    RATING_DESC = 'rating',
-    RATING_ASC = '-rating',
-    TITLE_DESC = 'title',
-    TITLE_ASC = '-title',
-    PRICE_DESC = 'price',
-    PRICE_ASC = '-price',
-}
-  
-type Sort = {
-    name: string;
-    property: SortPropertyEnum;
-};
-
-export interface FilterState {
-    categoryId: number,
-    sort: Sort
-}
-
-const initialState: FilterState = {
+const initialState = {
     categoryId: 0,
     sort: {
-        name: 'популярности',
-        property: SortPropertyEnum.RATING_DESC,
+        name: 'популярности ↓',
+        property: 'rating',
+        order: 'desc',
     },
 }
 

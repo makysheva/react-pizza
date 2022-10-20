@@ -1,15 +1,10 @@
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import classNames from 'classnames'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setSort } from '../../redux/slices/filterSlice'
+import { RootState } from '../../redux/store'
 
-export type ListType = {
-  name: string
-  property: string
-  order: string
-}
-
-const list: ListType[] = [
+const list = [
   {
     name: 'популярности ↓',
     property: 'rating',
@@ -42,21 +37,13 @@ const list: ListType[] = [
   }
 ]
 
-type SortProps = {
-  onClickSort: (args: ListType) => void
-  sortType: ListType
-}
-
-export const Sort: FC<SortProps> = ({
-  onClickSort,
-  sortType,
-}) => {
+export const Sort = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const sort: any = useSelector<RootState>(state => state.filter.sort)
   const dispatch = useDispatch()
 
-  const handleClickItem = (obj: ListType) => {
+  const handleClickItem = (obj: { name: string; property: string; order: string }) => {
     dispatch(setSort(obj))
-    onClickSort(obj)
     setIsOpen(false)
   }
 
@@ -76,7 +63,7 @@ export const Sort: FC<SortProps> = ({
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsOpen(!isOpen)}>{sortType.name}</span>
+        <span onClick={() => setIsOpen(!isOpen)}>{sort.name}</span>
       </div>
       {
         isOpen ?
@@ -87,7 +74,7 @@ export const Sort: FC<SortProps> = ({
                   <li
                     key={i}
                     onClick={() => handleClickItem(obj)}
-                    className={sortType.name === obj.name ? 'active' : ''}
+                    className={sort!!.name === obj.name ? 'active' : ''}
                   >
                     {obj.name}
                   </li>
