@@ -19,6 +19,7 @@ type DataType = {
     price: number;
     category: number;
     rating: number;
+    count: number;
 }
 
 export const Home = () => {
