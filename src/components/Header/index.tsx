@@ -1,10 +1,13 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { CartInitialState } from '../../redux/slices/cartSlice'
 import { RootState } from '../../redux/store'
 import { Search } from '../Search'
 
 export const Header = () => {
-  const {items, totalPrice}: any = useSelector<RootState>(state => state.cart)
+  const {items, totalPrice} = useSelector<RootState>(state => state.cart) as CartInitialState
+
+  const totalCount = items.reduce((sum: number, item: { count: number }) => sum + item.count, 0)
 
   return (
     <div className="header">
@@ -50,7 +53,7 @@ export const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{items.length}</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>
