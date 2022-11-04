@@ -34,19 +34,20 @@ export const Home = () => {
     }))
     const dispatch = useDispatch()
 
-    useEffect(() => {
+    const fetchPizzas = async () => {
         setIsLoading(true)
 
         const category = categoryId > 0 ? `category=${categoryId}` : ''
         const search = searchValue ? `${searchValue}` : ''
 
-        axios
-            .get(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4&sortBy=${sort.property}&order=${sort.order}&${category}&search=${search}&title=${searchValue}`)
-            .then(res => {
-                setData(res.data)
-                setIsLoading(false)
-            })
-    }, [categoryId, currentPage, searchValue, sort.order, sort.property])
+        try{
+            const res = await axios.get(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4&sortBy=${sort.property}&order=${sort.order}&${category}&search=${search}&title=${searchValue}`)
+            setData(res.data)
+            setIsLoading(false)
+        } catch(error){
+            console.log('error', error)
+        }
+    }
 
     return (
         <div className="container">
