@@ -49,9 +49,9 @@ export const Sort = () => {
   }
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      let path = event.composedPath().includes(sortRef.current)
-      if (!path) {
+    const handleClickOutside = (event: MouseEvent) => {
+      let path = sortRef.current && !event.composedPath().includes(sortRef.current)
+      if (path) {
         setIsOpen(false)
       }
     };

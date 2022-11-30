@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 
 import { NotFound } from './pages/404';
 import { Cart } from './pages/Cart';
+import { FullPizza } from './pages/FullPizza';
 import { Home } from './pages/Home';
 
 import './scss/app.scss';
@@ -24,6 +25,7 @@ export const App = () => {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="pizza/:id" element={<FullPizza />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

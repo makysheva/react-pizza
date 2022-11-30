@@ -1,6 +1,6 @@
-import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { SearchContext } from '../App'
 import { Categories } from '../components/Categories'
 import { Pagination } from '../components/Pagination'
@@ -8,9 +8,10 @@ import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/Skeleton'
 import { Sort } from '../components/Sort'
 import { setCategoryId } from '../redux/slices/filterSlice'
+import { fetchPizzas } from '../redux/slices/pizzaSlice'
 import { RootState } from '../redux/store'
 
-type DataType = {
+type ItemsType = {
     id: number;
     imageUrl: string;
     title: string;
@@ -23,31 +24,40 @@ type DataType = {
 }
 
 export const Home = () => {
-    const [data, setData] = useState<DataType[]>([])
     const [isLoading, setIsLoading] = useState(true)
     
     const { searchValue } = useContext(SearchContext)
-    const  { categoryId, sort, currentPage }: any = useSelector<RootState>(state => ({ 
+    const  { categoryId, sort, currentPage, items }: any = useSelector<RootState>(state => ({ 
         categoryId: state.filter.categoryId,
         sort: state.filter.sort.property,
         currentPage: state.filter.currentPage,
+        items: state.pizza.items,
     }))
     const dispatch = useDispatch()
 
-    const fetchPizzas = async () => {
-        setIsLoading(true)
+    const getPizzas = useCallback(
+        async () => {
+            setIsLoading(true)
 
-        const category = categoryId > 0 ? `category=${categoryId}` : ''
-        const search = searchValue ? `${searchValue}` : ''
+            const category = categoryId > 0 ? `category=${categoryId}` : ''
+            const search = searchValue ? `${searchValue}` : ''
 
-        try{
-            const res = await axios.get(`https://633ab455e02b9b64c61551f6.mockapi.io/pizzas?page=${currentPage}&limit=4&sortBy=${sort.property}&order=${sort.order}&${category}&search=${search}&title=${searchValue}`)
-            setData(res.data)
+            fetchPizzas({
+                currentPage,
+                category,
+                search,
+                searchValue,
+                sort,
+            })
+
             setIsLoading(false)
-        } catch(error){
-            console.log('error', error)
-        }
-    }
+        }, [categoryId, currentPage, searchValue, sort]
+    )
+
+    useEffect(() => {
+        getPizzas()
+    }, [categoryId, sort, searchValue, currentPage, getPizzas])
+    
 
     return (
         <div className="container">
@@ -61,7 +71,7 @@ export const Home = () => {
                     isLoading ?
                         [...new Array(6)].map((_, i) => <Skeleton key={i} />)
                         :
-                        data.map(obj => <PizzaBlock key={obj.id} {...obj} />)
+                        items.map((obj: ItemsType) => <PizzaBlock key={obj.id} {...obj} />)
                 }
 
             </div>
