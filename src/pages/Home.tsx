@@ -9,7 +9,7 @@ import { Skeleton } from '../components/Skeleton'
 import { Sort } from '../components/Sort'
 import { setCategoryId } from '../redux/slices/filterSlice'
 import { fetchPizzas } from '../redux/slices/pizzaSlice'
-import { RootState } from '../redux/store'
+import { RootState, useAppDispatch } from '../redux/store'
 
 type ItemsType = {
     id: number;
@@ -27,13 +27,14 @@ export const Home = () => {
     const [isLoading, setIsLoading] = useState(true)
     
     const { searchValue } = useContext(SearchContext)
-    const  { categoryId, sort, currentPage, items }: any = useSelector<RootState>(state => ({ 
+    const  { categoryId, sort, order, currentPage, items }: any = useSelector<RootState>(state => ({ 
         categoryId: state.filter.categoryId,
         sort: state.filter.sort.property,
+        order: state.filter.sort.order,
         currentPage: state.filter.currentPage,
         items: state.pizza.items,
     }))
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const getPizzas = useCallback(
         async () => {
@@ -41,17 +42,19 @@ export const Home = () => {
 
             const category = categoryId > 0 ? `category=${categoryId}` : ''
             const search = searchValue ? `${searchValue}` : ''
+            const orderValue = order ? 'asc' : 'desc';
 
-            fetchPizzas({
+            dispatch(fetchPizzas({
                 currentPage,
                 category,
                 search,
                 searchValue,
                 sort,
-            })
+                order: orderValue,
+            }))
 
             setIsLoading(false)
-        }, [categoryId, currentPage, searchValue, sort]
+        }, [categoryId, currentPage, dispatch, order, searchValue, sort]
     )
 
     useEffect(() => {

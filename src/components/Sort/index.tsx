@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSort } from '../../redux/slices/filterSlice'
+import { setSort, TSort } from '../../redux/slices/filterSlice'
 import { RootState } from '../../redux/store'
 
-const list = [
+const list: TSort[] = [
   {
     name: 'популярности ↓',
     property: 'rating',
@@ -37,13 +37,13 @@ const list = [
   }
 ]
 
-export const Sort = () => {
+export const Sort = memo(() => {
   const [isOpen, setIsOpen] = useState(false)
   const sort: any = useSelector<RootState>(state => state.filter.sort)
   const sortRef = useRef(null)
   const dispatch = useDispatch()
 
-  const handleClickItem = (obj: { name: string; property: string; order: string }) => {
+  const handleClickItem = (obj: TSort) => {
     dispatch(setSort(obj))
     setIsOpen(false)
   }
@@ -100,4 +100,4 @@ export const Sort = () => {
       }
     </div>
   )
-}
+})

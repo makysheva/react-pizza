@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 
@@ -10,7 +10,7 @@ type CategoriesProps = {
   onClickCategory: (args: number) => void
 }
 
-export const Categories: FC<CategoriesProps> = ({
+export const Categories: FC<CategoriesProps> = memo(({
   onClickCategory,
 }) => {
   const categoryId = useSelector<RootState>(state => state.filter.categoryId)
@@ -32,4 +32,4 @@ export const Categories: FC<CategoriesProps> = ({
       </ul>
     </div>
   )
-}
+})
