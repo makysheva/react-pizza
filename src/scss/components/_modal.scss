@@ -1,14 +1,16 @@
+@import '../_variables';
+
 .modal{
     position: absolute;
     top: 17%;
     left: 17%;
     content: "";
-    border: 2px solid #f24701;
+    border: 2px solid $orange;
     max-width: 100%;
     padding: 50px 70px;
-    background-color: white;
+    background-color: $white;
     border-radius: 20px;
-    box-shadow: 0 0 3px #a53103;
+    box-shadow: 0 0 3px $orange-dark;
 }
 
 .inner{
@@ -27,4 +29,10 @@
 .text{
     font-size: 35px;
     font-weight: 700;
+}
+
+.modal-close-btn{
+    position: absolute;
+    top: 14px;
+    right: 14px;
 }

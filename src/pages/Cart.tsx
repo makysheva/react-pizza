@@ -144,7 +144,7 @@ export const Cart = () => {
 
         {
             openModal ?
-                <ModalCheck />
+                <ModalCheck setOpenModal={setOpenModal} />
             : null
         }
         </>
