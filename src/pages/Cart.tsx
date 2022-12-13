@@ -1,6 +1,8 @@
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { CartEmpty, CartItem } from "../components"
+import { ModalCheck } from "../components/ModalCheck"
 import { clearItems } from "../redux/cart/slice"
 import { CartInitialState, CartItemType } from "../redux/cart/types"
 import { RootState } from "../redux/store"
@@ -8,6 +10,7 @@ import { RootState } from "../redux/store"
 import '../scss/components/_cart.scss'
 
 export const Cart = () => {
+    const [openModal, setOpenModal] = useState(false)
     const dispatch = useDispatch()
     const {items, totalPrice} = useSelector<RootState>(state => state.cart) as CartInitialState
 
@@ -27,6 +30,7 @@ export const Cart = () => {
     }
 
     return (
+        <>
         <div className="container container--cart">
             <div className="cart">
                 <div className="cart__top">
@@ -131,11 +135,18 @@ export const Cart = () => {
                     <span>Вернуться назад</span>
                     </Link>
                     <div className="button pay-btn">
-                    <span>Оплатить сейчас</span>
+                        <button onClick={() => setOpenModal(!openModal)}>Оплатить сейчас</button>
                     </div>
                 </div>
                 </div>
             </div>
         </div>
+
+        {
+            openModal ?
+                <ModalCheck />
+            : null
+        }
+        </>
     )
 }

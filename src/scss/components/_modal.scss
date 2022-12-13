@@ -1,0 +1,30 @@
+.modal{
+    position: absolute;
+    top: 17%;
+    left: 17%;
+    content: "";
+    border: 2px solid #f24701;
+    max-width: 100%;
+    padding: 50px 70px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 3px #a53103;
+}
+
+.inner{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.image{
+    max-width: 300px;
+    width: 100%;
+}
+
+.text{
+    font-size: 35px;
+    font-weight: 700;
+}
