@@ -1,38 +1,39 @@
 import { memo, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSort, TSort } from '../../redux/slices/filterSlice'
 import { RootState } from '../../redux/store'
+import { PROPERTY, TSort } from '../../redux/filter/types'
+import { setSort } from '../../redux/filter/slice'
 
 const list: TSort[] = [
   {
     name: 'популярности ↓',
-    property: 'rating',
+    property: PROPERTY.RATING,
     order: 'desc',
   },
   {
     name: 'популярности ↑',
-    property: 'rating',
+    property: PROPERTY.RATING,
     order: 'asc',
   },
   {
     name: 'цене ↓',
-    property: 'price',
+    property: PROPERTY.PRICE,
     order: 'desc',
   },
   {
     name: 'цене ↑',
-    property: 'price',
+    property: PROPERTY.PRICE,
     order: 'asc',
   },
   {
     name: 'алфавиту ↓',
-    property: 'title',
+    property: PROPERTY.TITLE,
     order: 'desc',
   },
    {
     name: 'алфавиту ↑',
-    property: 'title',
+    property: PROPERTY.TITLE,
     order: 'asc',
   }
 ]

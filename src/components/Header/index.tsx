@@ -1,16 +1,28 @@
+import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { CartInitialState } from '../../redux/slices/cartSlice'
+import { CartInitialState } from '../../redux/cart/types'
 import { RootState } from '../../redux/store'
 import { Search } from '../Search'
 
 export const Header = () => {
   const {items, totalPrice} = useSelector<RootState>(state => state.cart) as CartInitialState
-
   const location = useLocation()
   const navigate = useNavigate()
+  const isMounted = useRef(false)
 
   const totalCount = items.reduce((sum: number, item: { count: number }) => sum + item.count, 0)
+
+  useEffect(() => {
+    if(isMounted.current){
+      const json = JSON.stringify(items)
+      localStorage.setItem('cart', json)
+    }
+
+    isMounted.current = true
+  
+  }, [items])
+  
 
   return (
     <div className="header">

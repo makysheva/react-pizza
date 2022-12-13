@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { SearchContext } from '../App'
 import { Categories } from '../components/Categories'
@@ -7,8 +7,8 @@ import { Pagination } from '../components/Pagination'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/Skeleton'
 import { Sort } from '../components/Sort'
-import { setCategoryId } from '../redux/slices/filterSlice'
-import { fetchPizzas } from '../redux/slices/pizzaSlice'
+import { setCategoryId } from '../redux/filter/slice'
+import { fetchPizzas } from '../redux/pizza/asyncActions'
 import { RootState, useAppDispatch } from '../redux/store'
 
 type ItemsType = {

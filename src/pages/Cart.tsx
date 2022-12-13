@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { CartEmpty } from "../components/CartEmpty"
 import { CartItem } from "../components/CartItem"
-import { CartInitialState, CartItemType, clearItems } from "../redux/slices/cartSlice"
+import { clearItems } from "../redux/cart/slice"
+import { CartInitialState, CartItemType } from "../redux/cart/types"
 import { RootState } from "../redux/store"
 
 import '../scss/components/_cart.scss'
