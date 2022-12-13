@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { CartInitialState } from '../../redux/cart/types'
-import { RootState } from '../../redux/store'
-import { Search } from '../Search'
+import { CartInitialState } from '../redux/cart/types'
+import { RootState } from '../redux/store'
+import { Search } from './Search'
 
 export const Header = () => {
   const {items, totalPrice} = useSelector<RootState>(state => state.cart) as CartInitialState

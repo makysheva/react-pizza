@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 export const FullPizza = () => {
@@ -12,7 +12,7 @@ export const FullPizza = () => {
       const { id } = useParams()
       const navigate = useNavigate()
     
-      React.useEffect(() => {
+      useEffect(() => {
         async function fetchPizza() {
           try {
             const { data } = await axios.get('https://626d16545267c14d5677d9c2.mockapi.io/items/' + id);
@@ -24,7 +24,7 @@ export const FullPizza = () => {
         }
     
         fetchPizza()
-      }, [])
+      }, [id, navigate])
     
       if (!pizza) {
         return <>Загрузка...</>

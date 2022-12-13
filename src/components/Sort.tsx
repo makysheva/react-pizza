@@ -1,9 +1,9 @@
 import { memo, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { PROPERTY, TSort } from '../../redux/filter/types'
-import { setSort } from '../../redux/filter/slice'
+import { RootState } from '../redux/store'
+import { PROPERTY, TSort } from '../redux/filter/types'
+import { setSort } from '../redux/filter/slice'
 
 const list: TSort[] = [
   {

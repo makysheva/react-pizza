@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from './components/Layout';
+import { Layout } from './components';
 
 import { NotFound } from './pages/404';
 import { Cart } from './pages/Cart';
