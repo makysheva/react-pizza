@@ -1,3 +1,5 @@
+@import '../_variables';
+
 .cart__clear{
     border: none;
     background: inherit;
@@ -6,7 +8,7 @@
 .pay-btn button{
     border: none;
     background: transparent;
-    color: white;
+    color: $white;
     font-size: 18px;
     cursor: pointer;
     font-weight: 600;

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { CartInitialState } from '../redux/cart/types'
 import { RootState } from '../redux/store'
+import { Auth } from './Auth'
 import { Search } from './Search'
 
 export const Header = () => {
@@ -77,6 +78,8 @@ export const Header = () => {
           </>
         : null
         }
+
+        <Auth />
       </div>
     </div>
   )
